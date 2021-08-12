@@ -1,4 +1,4 @@
-package com.charles;
+package com.charles.classloader;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,9 +7,8 @@ import java.util.List;
  * @author chales.tang
  * @title JvmTest01
  * @discription
- * @date 2021/8/11 8:50 下午
  */
-public class JvmTest01 {
+public class JvmTest {
 
     public static void main(String[] args) {
         bootStrapClassLoader();

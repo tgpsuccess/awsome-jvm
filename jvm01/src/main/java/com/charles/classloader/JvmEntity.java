@@ -4,7 +4,6 @@ package com.charles;
  * @author chales.tang
  * @title JvmEntity
  * @discription
- * @date 2021/8/11 8:46 下午
  */
 public class JvmEntity {
 
