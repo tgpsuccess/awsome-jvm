@@ -6,9 +6,9 @@ import java.util.List;
 /**
  * @author chales.tang
  * @title JvmTest01
- * @discription
+ * @discription 类加载器加载目录测试
  */
-public class JvmTest {
+public class JvmTypeTest {
 
     public static void main(String[] args) {
         bootStrapClassLoader();
@@ -19,7 +19,7 @@ public class JvmTest {
     }
 
     /**
-     * @Discription 启动类加载器的职责
+     * @Discription 启动类加载器的职责，加载 $JAVA_HOME/jre/lib下的文件
      */
     public static void bootStrapClassLoader() {
         String property = System.getProperty("sun.boot.class.path");
@@ -28,7 +28,7 @@ public class JvmTest {
     }
 
     /**
-     * @Discription 扩展类加载器的职责
+     * @Discription 扩展类加载器的职责，加载 $JAVA_HOME/jre/lib/ext下的文件
      */
     public static void extClassLoader() {
         String property = System.getProperty("java.ext.dirs");
@@ -37,7 +37,7 @@ public class JvmTest {
     }
 
     /**
-     * @Discription 应用类加载器的职责
+     * @Discription 应用类加载器的职责，加载工程classpath目录下的class文件及jar包
      */
     public static void appClassLoader() {
         String property = System.getProperty("java.class.path");

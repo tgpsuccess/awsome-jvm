@@ -7,9 +7,9 @@ import com.charles.service.JvmSpiService;
  * @title JvmSpiServiceImpl
  * @discription
  */
-public class JvmSpiServiceImpl01 implements JvmSpiService {
+public class JvmSpiServiceImpl02 implements JvmSpiService {
     @Override
     public String getName() {
-        return "01";
+        return "02";
     }
 }

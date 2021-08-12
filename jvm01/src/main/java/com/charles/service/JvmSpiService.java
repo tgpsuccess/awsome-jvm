@@ -6,4 +6,5 @@ package com.charles.service;
  * @discription
  */
 public interface JvmSpiService {
+    String getName();
 }
