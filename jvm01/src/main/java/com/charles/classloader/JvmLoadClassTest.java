@@ -14,6 +14,7 @@ public class JvmLoadClassTest {
 
         // new之前先加载并初始化该类
         JvmEntity jvmEntity = new JvmEntity();
+
     }
 
 }
