@@ -13,13 +13,11 @@ public class JvmSpiTest {
 
     public static void main(String[] args) {
 
-        // 设置当前线程的类加载器未扩展类加载器
-        Thread.currentThread().setContextClassLoader(JvmSpiTest.class.getClassLoader().getParent());
+        // 设置当前线程的类加载器为扩展类加载器
+//        Thread.currentThread().setContextClassLoader(JvmSpiTest.class.getClassLoader().getParent());
 
         // 通过SPI机制初始化JvmSpiService的实现类
         ServiceLoader<JvmSpiService> load = ServiceLoader.load(JvmSpiService.class);
-        load.forEach( l -> {
-            System.out.println(l.getClass());
-        });
+        load.forEach( l -> System.out.println(l.getClass()));
     }
 }
