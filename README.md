@@ -3,7 +3,6 @@
 ------
 
 **整理笔记、知识，知其然，知其所以然，将其中承载的价值传播分享出去**
-------
 
 ## 1. ClassLoader类加载器
 
@@ -18,7 +17,7 @@
 
 > 默认情况下，当前线程关联的是应用类加载器
 
-![默认情况下，当前线程关联的是应用类加载器][2]
+![默认情况下，当前线程关联的是应用类加载器][1]
  
 ### 1.2 类加载器双亲委派机制
 
@@ -83,12 +82,12 @@ Java SPI全称Service Provider Interface
  - 定义接口文件的名称：
 \src\main\resources\META-INF\services\com.charles.service.JvmSpiService
 
-![SPI机制加载自定义实现类][3]
+![SPI机制加载自定义实现类][2]
 
 > SPI机制如何绕过ClassLoader类loadClass方法
 
 查找当前线程类加载器目录下是否由SPI机制对应的配置文件，如果没有，则初始化该类失败，抛出异常。
-![Mysql驱动实现类初始化失败][4]
+![Mysql驱动实现类初始化失败][3]
 
 ### 1.5 自定义类加载器
 
@@ -114,10 +113,13 @@ Java栈，又称线程栈，是线程私有的，在线程创建时被创建，�
 
 栈帧就是每个方法需要的运行时内存空间。一个方法对应一个栈帧内存空间，每个方法都有独立的栈帧内存空间。栈帧采用先进后出、后进先出的方式进行内存空间的销毁。
 
+![栈帧数据结构测试][4]
+
 > 栈内存溢出
 
 栈空间产生过多的栈帧内存空间一直得不到释放，导致内存溢出。例如，递归方法的调用。
 
+![栈内存溢出][5]
 
 ### 3.3 本地方法栈（Native）
 
@@ -148,10 +150,11 @@ Java栈，又称线程栈，是线程私有的，在线程创建时被创建，�
 ---
 
 
-作者 @charles   
+作者 @charles
 
 
-  [1]: https://github.com/tgpsuccess/awsome-jvm#1-classloader%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8
-  [2]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E5%BD%93%E5%89%8D%E7%BA%BF%E7%A8%8B%E9%BB%98%E8%AE%A4%E4%BD%BF%E7%94%A8%E5%BA%94%E7%94%A8%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8.png
-  [3]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/SPI%E6%9C%BA%E5%88%B6.png
-  [4]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/Mysql%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96%E5%A4%B1%E8%B4%A5.png
+  [1]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E5%BD%93%E5%89%8D%E7%BA%BF%E7%A8%8B%E9%BB%98%E8%AE%A4%E4%BD%BF%E7%94%A8%E5%BA%94%E7%94%A8%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8.png
+  [2]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/SPI%E6%9C%BA%E5%88%B6.png
+  [3]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/Mysql%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96%E5%A4%B1%E8%B4%A5.png
+  [4]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E6%A0%88%E5%B8%A7%E6%B5%8B%E8%AF%95.png
+  [5]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E6%A0%88%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA.png
