@@ -6,37 +6,37 @@
 
 [1.ClassLoader类加载器][1]
 
-[1.1 类加载器分类][2]
+--[1.1 类加载器分类][2]
 
-[1.2 类加载器双亲委派机制][3]
+--[1.2 类加载器双亲委派机制][3]
 
-[1.3 ClassLoader类loadClass方法源码解读][4]
+--[1.3 ClassLoader类loadClass方法源码解读][4]
 
-[1.4 SPI机制][5]
+--[1.4 SPI机制][5]
 
-[1.5 自定义类加载器][6]
+--[1.5 自定义类加载器][6]
 
 [2. 字节码文件分析][7]
 
 [3. JVM内存结构][8]
 
-[3.1 堆（Heap）][9]
+--[3.1 堆（Heap）][9]
 
-[3.2 栈（Stack）][10]
+--[3.2 栈（Stack）][10]
 
-[3.3 本地方法栈（Native）][11]
+--[3.3 本地方法栈（Native）][11]
 
-[3.4 方法区（元空间）][12]
+--[3.4 方法区（元空间）][12]
 
-[3.5 常量池][13]
+--[3.5 常量池][13]
 
-[3.5.1 二进制字节码][14]
+----[3.5.1 二进制字节码][14]
 
-[3.5.2 静态常量池（Class常量池）][15]
+----[3.5.2 静态常量池（Class常量池）][15]
 
-[3.5.3 运行时常量池][16]
+----[3.5.3 运行时常量池][16]
 
-3.5.4 字符串常量池
+----[3.5.4 字符串常量池][17]
 
 ## 1. ClassLoader类加载器
 
@@ -51,7 +51,7 @@
 
 > 默认情况下，当前线程关联的是应用类加载器
 
-![默认情况下，当前线程关联的是应用类加载器][17]
+![默认情况下，当前线程关联的是应用类加载器][18]
  
 ### 1.2 类加载器双亲委派机制
 
@@ -116,12 +116,12 @@ Java SPI全称Service Provider Interface
  - 定义接口文件的名称：
 \src\main\resources\META-INF\services\com.charles.service.JvmSpiService
 
-![SPI机制加载自定义实现类][18]
+![SPI机制加载自定义实现类][19]
 
 > SPI机制如何绕过ClassLoader类loadClass方法
 
 查找当前线程类加载器目录下是否由SPI机制对应的配置文件，如果没有，则初始化该类失败，抛出异常。
-![Mysql驱动实现类初始化失败][19]
+![Mysql驱动实现类初始化失败][20]
 
 ### 1.5 自定义类加载器
 
@@ -143,13 +143,13 @@ Java SPI全称Service Provider Interface
 
 java.lang.OutOfMemoryError: Java heap space
 申请内存不足，导致堆内存溢出。
-![堆内存溢出][20]
+![堆内存溢出][21]
 
 > 堆内存泄漏
 
 java.lang.OutOfMemoryError: GC overhead limit exceeded
 概念：被占用的内存，经过多次长时间的GC操作都无法回收，导致可用内存越来越少。
-![堆内存泄漏][21]
+![堆内存泄漏][22]
 
 ### 3.2 栈（Stack）
 
@@ -159,13 +159,13 @@ Java栈，又称线程栈，是线程私有的，在线程创建时被创建，�
 
 栈帧就是每个方法需要的运行时内存空间。一个方法对应一个栈帧内存空间，每个方法都有独立的栈帧内存空间。栈帧采用先进后出、后进先出的方式进行内存空间的销毁。
 
-![栈帧数据结构测试][22]
+![栈帧数据结构测试][23]
 
 > 栈内存溢出
 
 栈空间产生过多的栈帧内存空间一直得不到释放，导致内存溢出。例如，递归方法的调用。
 
-![栈内存溢出][23]
+![栈内存溢出][24]
 
 ### 3.3 本地方法栈（Native）
 
@@ -321,7 +321,7 @@ String str3 = “abc”;
 String str4 = new String(“abc”);
 String str5 = new String(“abc”);
 ```
-![堆栈方法区存储字符串][24]
+![堆栈方法区存储字符串][25]
 面试题：String str4 = new String(“abc”) 创建多少个对象？
 1. 在常量池中查找是否有“abc”对象，有则返回对应的引用实例，没有则创建对应的实例对象；
 2. 在堆中 new 一个 String("abc") 对
@@ -355,7 +355,7 @@ public static int INT1 =1 ;
 public static int INT2 =1 ;
 public static int INT3 =1 ;
 ```
-![基础类型的变量和常量][25]
+![基础类型的变量和常量][26]
 
 ##### 2）操作字符串常量池的方式
 
@@ -451,12 +451,13 @@ public class StringConstantPoolTest {
   [14]: https://github.com/tgpsuccess/awsome-jvm#351-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AD%97%E8%8A%82%E7%A0%81
   [15]: https://github.com/tgpsuccess/awsome-jvm#352-%E9%9D%99%E6%80%81%E5%B8%B8%E9%87%8F%E6%B1%A0class%E5%B8%B8%E9%87%8F%E6%B1%A0
   [16]: https://github.com/tgpsuccess/awsome-jvm#353-%E8%BF%90%E8%A1%8C%E6%97%B6%E5%B8%B8%E9%87%8F%E6%B1%A0
-  [17]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E5%BD%93%E5%89%8D%E7%BA%BF%E7%A8%8B%E9%BB%98%E8%AE%A4%E4%BD%BF%E7%94%A8%E5%BA%94%E7%94%A8%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8.png
-  [18]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/SPI%E6%9C%BA%E5%88%B6.png
-  [19]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/Mysql%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96%E5%A4%B1%E8%B4%A5.png
-  [20]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E5%A0%86%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA.png
-  [21]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E5%A0%86%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F.png
-  [22]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E6%A0%88%E5%B8%A7%E6%B5%8B%E8%AF%95.png
-  [23]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E6%A0%88%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA.png
-  [24]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%98%E9%87%8F%E5%92%8C%E5%B8%B8%E9%87%8F.jpeg
+  [17]: https://github.com/tgpsuccess/awsome-jvm#354-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0
+  [18]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E5%BD%93%E5%89%8D%E7%BA%BF%E7%A8%8B%E9%BB%98%E8%AE%A4%E4%BD%BF%E7%94%A8%E5%BA%94%E7%94%A8%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8.png
+  [19]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/SPI%E6%9C%BA%E5%88%B6.png
+  [20]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/Mysql%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96%E5%A4%B1%E8%B4%A5.png
+  [21]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E5%A0%86%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA.png
+  [22]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E5%A0%86%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F.png
+  [23]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E6%A0%88%E5%B8%A7%E6%B5%8B%E8%AF%95.png
+  [24]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E6%A0%88%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA.png
   [25]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%98%E9%87%8F%E5%92%8C%E5%B8%B8%E9%87%8F.jpeg
+  [26]: https://github.com/tgpsuccess/awsome-jvm/blob/master/docs/images/%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%98%E9%87%8F%E5%92%8C%E5%B8%B8%E9%87%8F.jpeg
