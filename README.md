@@ -517,7 +517,7 @@ public class ClassLayoutTest {
 }
 ```
 
-> 执行结果
+> 关闭对象头指针压缩，VM options参数设置**-XX:-UseCompressedOops**，代码执行结果
 
 ```java
 com.charles.layout.ClassLayoutTest object internals:
