@@ -11,6 +11,7 @@
     <modules>
         <module>jvm01</module>
         <module>jvm02</module>
+        <module>jvm03</module>
     </modules>
 
     <dependencies>
@@ -18,6 +19,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jol</groupId>
+            <artifactId>jol-core</artifactId>
+            <version>0.10</version>
         </dependency>
     </dependencies>
 

@@ -413,27 +413,128 @@ public class StringConstantPoolTest {
 
 ------
 
-## 4. GC日志分析
+## 4. CPU飙高分析排查
+
+### 4.1 CPU飙高产生的原因及解决方案
+
+原因及解决方案:
+1. CAS自旋，必须控制自旋次数；
+2.	死循环，需要控制循环的次数；
+3.	阿里云Redis被注入挖矿程序，Redis端口不能暴露外网访问；
+4.	服务器被DDOS攻击，限流、IP黑名单、图形验证码防止机器模拟攻击；
+
+### 4.2 Linux服务器排查CPU飙高问题
+
+使用arthas排查CPU飙高问题.
+1. 下载arthas：curl -O https://arthas.aliyun.com/arthas-boot.jar
+2. 执行jar包：java -jar arthas-boot.jar
+3. 选择CPU使用率第一的进程，输入1
+4. 查看排前三的线程：thread -n 3
+
+> 代码：模拟死循环导致CPU飙高
+
+```java
+public class CpuExceptionTest {
+
+    public static void main(String[] args) {
+        new Thread(() -> {
+            while (true){
+                System.out.println("test");
+            }
+        }, "cpu-test").start();
+    }
+}
+```
+
+> arthas操作
+
+
+----------
+
+## 5. Java对象布局
+
+Java对象分为：对象头、实例数据、对齐填充组合。
+
+
+### 5.1 对象头
+
+HotSpot虚拟机的对象头(Object Header)包括两部分信息:
+
+第一部分"Mark Word"：用于存储对象自身的运行时数据，如哈希码（HashCode）、GC分代年龄、锁状态标志、线程持有的锁、偏向线程ID、偏向时间戳等。
+
+第二部分"Klass Pointer"：对象指向它的类的元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。
+
+### 5.2 实例数据
+
+Java类中定义的成员属性的实际大小。比如int类型，32bit，4个字节。
+
+### 5.3 对齐填充
+
+由于HotSpot虚拟机的自动内存管理系统要求对象的起始地址必须是8字节的整数倍。
+对齐填充并不是必然存在的，也没有特定的含义，仅仅起着占位符的作用。
+
+### 5.4 使用jol-core查看对象布局细节
+
+> 示例代码
+
+```java
+// 添加maven依赖
+<dependency>
+    <groupId>org.openjdk.jol</groupId>
+    <artifactId>jol-core</artifactId>
+    <version>0.10</version>
+</dependency>
+        
+public class ClassLayoutTest {
+    private int id;
+
+    public static void main(String[] args) {
+        ClassLayoutTest test = new ClassLayoutTest();
+        // 生成类布局的可打印字符串表
+        System.out.println(ClassLayout.parseInstance(test).toPrintable());
+    }
+}
+```
+
+> 执行结果
+
+```java
+com.charles.layout.ClassLayoutTest object internals:
+ OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
+ // 对象头
+      0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
+      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
+      8     4        (object header)                           28 30 96 10 (00101000 00110000 10010110 00010000) (278278184)
+     12     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
+// 实例数据
+     16     4    int ClassLayoutTest.id                        0
+// 对齐填充
+     20     4        (loss due to the next object alignment)
+// 总共24字节，符合8的倍数
+Instance size: 24 bytes
+Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
+```
+
+----------
+
+## 6. GC日志分析
 
 
 ----------
 
 
-## 5. 串行与并行收集器
+## 7. 串行与并行收集器
 
-## 6. CMS收集器
+## 8. CMS收集器
 
-## 7. G1收集器
+## 9. G1收集器
 
-## 8. JVM参数调优
+## 10. JVM参数调优
 
 ---
 
 
 作者 @charles
-
-
-  [22E5%8C%BA%E5%AD%98%E5%82%A8%E5%AD%97%E7%AC%A6%E4%B8%B2.jpeg
 
 
   [1]: https://github.com/tgpsuccess/awsome-jvm#1-classloader%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8
