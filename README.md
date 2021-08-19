@@ -451,7 +451,7 @@ public class StringConstantPoolTest {
 3. 选择CPU使用率第一的进程，输入1
 4. 查看排前三的线程：thread -n 3
 
-> 代码：模拟死循环导致CPU飙高
+> 示例代码：模拟死循环导致CPU飙高
 
 ```java
 public class CpuExceptionTest {
@@ -461,14 +461,11 @@ public class CpuExceptionTest {
             while (true){
                 System.out.println("test");
             }
+            // 指定线程名称
         }, "cpu-test").start();
     }
 }
 ```
-
-> 模拟死循环导致CPU飙高
-
-![模拟死循环导致CPU飙高][37]
 
 > arthas排查CPU飙高问题
 
